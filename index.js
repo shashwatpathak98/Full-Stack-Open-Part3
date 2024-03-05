@@ -30,11 +30,19 @@ let phoneBook = [
 app.post("/api/persons", (request, response) => {
   const body = request.body;
   if (!body.name) {
-    return response.status(400).json({ error: "404 Person Details missing " });
+    return response.status(400).json({ error: "Person name is missing" });
   }
   if (!body.number) {
-    return response.status(400).json({ error: "404 Person Details missing " });
+    return response.status(400).json({ error: "Person number is missing" });
   }
+
+  const duplicateName = phoneBook.find((detail) => detail.name === body.name);
+  if (duplicateName) {
+    return response
+      .status(400)
+      .json({ error: `${body.name} already exists , name must be unique` });
+  }
+
   const person = {
     id: Number(Math.floor(Math.random() * 100000)),
     name: body.name,
