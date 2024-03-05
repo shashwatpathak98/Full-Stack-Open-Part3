@@ -35,9 +35,20 @@ app.get("/api/persons", (request, response) => {
   response.json(phoneBook);
 });
 
+app.get("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const phoneDetail = phoneBook.find((info) => info.id === id);
+
+  if (phoneDetail) {
+    response.json(phoneDetail);
+  } else {
+    response.json({ error: "Not found 404" });
+  }
+});
+
 app.get("/info", (request, response) => {
   response.send(`<p>Phonebook has info for ${phoneBook.length} people </p> <p>
-      ${new Date().toString()}`)
+      ${new Date().toString()}`);
 });
 const PORT = 3023;
 app.listen(PORT, () => {
