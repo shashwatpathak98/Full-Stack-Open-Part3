@@ -43,7 +43,6 @@ app.post("/api/persons", (request, response) => {
 
   phoneBook = phoneBook.concat(person);
   response.json(person);
-  
 });
 
 app.get("/", (request, response) => {
