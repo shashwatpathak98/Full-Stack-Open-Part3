@@ -27,6 +27,25 @@ let phoneBook = [
   },
 ];
 
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+  if (!body.name) {
+    return response.status(400).json({ error: "404 Person Details missing " });
+  }
+  if (!body.number) {
+    return response.status(400).json({ error: "404 Person Details missing " });
+  }
+  const person = {
+    id: Number(Math.floor(Math.random() * 100000)),
+    name: body.name,
+    number: body.number,
+  };
+
+  phoneBook = phoneBook.concat(person);
+  response.json(person);
+  
+});
+
 app.get("/", (request, response) => {
   response.send("<h1>Phoneboook</h1>");
 });
@@ -58,9 +77,8 @@ app.delete("/api/persons/:id", (request, response) => {
   if (toDelete) {
     phoneBook = phoneBook.filter((per) => per.id !== id);
     response.json({ sucess: `${id} deleted` });
-  }
-  else{
-    response.json({error: "Person not found"})
+  } else {
+    response.json({ error: "Person not found" });
   }
 });
 
